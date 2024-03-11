@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const { userInfo } = require('os');
 const app = express()
 const port = 3000;
-const url = 'mongodb://0.0.0.0/';
+const url = 'mongodb+srv://Nikgodfather:ZgVhJG0Z3giKFYvs@atlascluster.dmvvgxt.mongodb.net/?retryWrites=true&w=majority&appName=AtlasCluster';
 const Entry = mongoose.model('Entry', { _id: Number, name: String, password: String });
 const LoginEntry = mongoose.model('LoginEntry', { _id: Number, password: String });
 
