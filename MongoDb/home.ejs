@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+.News, .contact, .about {
+    display: none;
+}
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.search-container {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.search-container input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 200px;
+    box-sizing: border-box;
+    transition: width 0.3s ease-in-out;
+}
+
+.search-container input[type="text"]:focus {
+    width: 300px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+.action-buttons button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.action-buttons button:hover {
+    color: #007bff;
+}
+
+.update-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Set a high z-index to ensure it appears in front */
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.close-btn i {
+    color: #333;
+    font-size: 18px;
+}
+
+.close-btn:hover i {
+    color: #ff0000; /* Change color on hover */
+}
+.update-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.update-form input {
+    display: block;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.update-form button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.update-form button:hover {
+    background-color: #0056b3;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}.circle {
+    width: 200px; /* Set a default width */
+    height: 200px; /* Set a default height */
+    border-radius: 50%; /* Make it a circle */
+    background-color: #3498db; /* Set background color */
+    color: white; /* Set text color */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    position: relative; /* Relative positioning for absolute child */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 992px) {
+    .circle {
+        width: 150px; /* Adjust width for smaller screens */
+        height: 150px; /* Adjust height for smaller screens */
+        line-height: 150px; /* Adjust line-height for smaller screens */
+    }
+}
+
+/* Media query for even smaller screens */
+@media (max-width: 576px) {
+    .circle {
+        width: 100px; /* Adjust width for even smaller screens */
+        height: 100px; /* Adjust height for even smaller screens */
+        line-height: 100px; /* Adjust line-height for even smaller screens */
+    }
+}
+/* Set a maximum width for the chart container */
+#circleChartContainer {
+    max-width: 600px; /* Adjust this value based on your design */
+    margin: 0 auto; /* Center the chart horizontally */
+}
+
+</style>
+</head>
+<body>
+
+<div class="topnav" id="myTopnav">
+  <a href="/" >Create</a>
+
+  <a href="#home" class="active" onclick="toggleSection('home')">Home</a>
+  <!--<a href="#news" onclick="toggleSection('news')">News</a>-->
+  <a href="#contact" onclick="toggleSection('contact')">DataSets</a>
+  
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<div class="Home" id="home">
+    <div id="circleChartContainer">
+        <canvas id="circleChart"></canvas>
+    </div>
+    
+
+</div>
+
+<div class="News" id="news">
+    <h1>News section</h1>
+</div>
+<div class="contact" id="contact">
+    <div class="container">
+        <h1>Data from MongoDB</h1>
+        <!-- Search Field -->
+        <div class="search-container">
+            <label for="searchId"><i class="fas fa-search"></i></label>
+            <input type="text" id="searchId" oninput="filterTable()" placeholder="Search by ID...">
+        </div>
+
+        <table id="dataTable">
+            <tr>
+                <th>_id</th>
+                <th>Name</th>
+                <th>Password</th>
+                <th>Actions</th> <!-- New column for delete and update buttons -->
+            </tr>
+            <% data.forEach(entry => { %>
+                <tr>
+                    <td><%= entry._id %></td>
+                    <td><%= entry.name %></td>
+                    <td><%= entry.password %></td>
+                    <td class="action-buttons">
+                        <button onclick="deleteEntry('<%= entry._id %>')"><i class="fas fa-trash-alt"></i></button>
+                        <button onclick="toggleUpdateForm('<%= entry._id %>')"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+        <!-- Update Form -->
+        <div class="update-form" id="updateFormContainer">
+            <button class="close-btn" onclick="closeUpdateForm()"><i class="fas fa-times"></i></button>
+            <h2>Update Entry</h2>
+            <form id="updateForm">
+                ID:<input id="updateId" name="id" readonly><br>
+                Name:<input type="text" id="updateName" name="name" placeholder="New Name"><br>
+                Password:<input type="password" id="updatePassword" name="password" placeholder="New Password"><br>
+                <button type="button" onclick="submitUpdateForm()">Update</button>
+            </form>
+        </div>
+
+</div>
+
+
+<script>
+function myFunction() {  
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
+function toggleSection(sectionId) {
+  var sections = document.querySelectorAll('.Home, .News, .contact, .about');
+  sections.forEach(function(section) {
+    if (section.id === sectionId) {
+      section.style.display = (section.style.display === 'block') ? 'none' : 'block';
+    } else {
+      section.style.display = 'none';
+    }
+  });
+}
+function toggleUpdateForm(id) {
+    var updateForm = document.querySelector('.update-form');
+    var updateIdInput = document.getElementById('updateId');
+    var updateNameInput = document.getElementById('updateName');
+    var updatePasswordInput = document.getElementById('updatePassword');
+
+    // Find the corresponding entry in the table and populate the form fields
+    var table = document.getElementById('dataTable');
+    var rows = table.getElementsByTagName('tr');
+    for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName('td');
+        if (cells.length > 0 && cells[0].innerText === id) {
+            updateIdInput.value = id; // Set the ID in the hidden input field
+            updateNameInput.value = cells[1].innerText; // Set the name
+            updatePasswordInput.value = cells[2].innerText; // Set the password
+            break;
+        }
+    }
+
+    // Toggle the display of the update form
+    if (updateForm.style.display === 'block') {
+        updateForm.style.display = 'none';
+    } else {
+        updateForm.style.display = 'block';
+    }
+}
+
+        // Function to submit the update form
+        function submitUpdateForm() {
+            var id = document.getElementById('updateId').value;
+            var newName = document.getElementById('updateName').value;
+            var newPassword = document.getElementById('updatePassword').value;
+
+            // Perform an AJAX request to update the entry with the new data
+            fetch(`/update/${id}/${newName}/${newPassword}`, {
+                method: 'PUT'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Reload the page after successful update
+                    window.location.reload();
+                } else {
+                    throw new Error('Failed to update entry');
+                }
+            })
+            .catch(error => console.error('Error updating entry:', error.message));
+        }
+
+        // Function to delete an entry
+        function deleteEntry(id) {
+            // Perform an AJAX request to delete the entry with the given ID
+            fetch(`/delete/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                } else {
+                    throw new Error('Failed to delete entry');
+                }
+            })
+            .catch(error => console.error('Error deleting entry:', error.message));
+        }
+
+        // Function to filter the table based on the entered ID
+        function filterTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchId");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("dataTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        function closeUpdateForm() {
+    var updateFormContainer = document.getElementById('updateFormContainer');
+    updateFormContainer.style.display = 'none';
+}
+document.addEventListener('DOMContentLoaded', function () {
+    var ctx = document.getElementById('circleChart').getContext('2d');
+    var count = <%= count %>; // Retrieve the count from EJS template
+
+    var data = {
+        datasets: [{
+            data: [count], // Remaining percentage
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)' // Color for the count
+            ],
+            borderWidth: 0
+        }],
+        // These labels are for demonstration purposes
+        labels: [
+            'DataSets:'+ count
+        ]
+    };
+
+    var options = {
+        responsive: true, // Keep this true
+        cutoutPercentage: 30,
+        legend: {
+            display: true
+        }
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: options,
+    });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "build":[
+        {
+            "src": "./file.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "MONGO DB":[
+        {
+            "src": "/(.*)",
+            "dest": "/"
+        }
+    ]
+}
